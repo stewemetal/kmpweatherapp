@@ -14,6 +14,7 @@ class KmpWeatherApplication : Application() {
         startKoin {
             androidContext(this@KmpWeatherApplication)
             modules(
+                AppModule().module,
                 SharedModule().module,
             )
         }
