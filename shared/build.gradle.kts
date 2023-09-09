@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.library)
@@ -13,24 +15,43 @@ kotlin {
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "17"
+                jvmTarget = libs.versions.java.get()
             }
         }
     }
 
     jvm("desktop") {
-        jvmToolchain(17)
+        jvmToolchain(libs.versions.java.get().toInt())
+    }
+
+    dependencies {
+        add("kspCommonMainMetadata", libs.koin.ksp.compiler)
+    }
+
+    tasks.withType<KotlinCompile<*>>().configureEach {
+        if (name != "kspCommonMainKotlinMetadata") {
+            dependsOn("kspCommonMainKotlinMetadata")
+        }
+    }
+    afterEvaluate {
+        tasks.filter {
+            it.name.contains("SourcesJar", true)
+        }?.forEach {
+            println("SourceJarTask====>${it.name}")
+            it.dependsOn("kspCommonMainKotlinMetadata")
+        }
     }
 
     listOf(
+        iosSimulatorArm64(),
         iosX64(),
         iosArm64(),
-        iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
         }
     }
+
 
     sourceSets {
         val commonMain by getting {
@@ -38,6 +59,7 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.bundles.ktor.shared)
                 implementation(libs.koin.core)
+                implementation(libs.koin.annotations)
             }
         }
 
