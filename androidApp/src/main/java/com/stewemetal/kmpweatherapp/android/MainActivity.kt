@@ -18,7 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.stewemetal.kmpweatherapp.Greeting
 import com.stewemetal.kmpweatherapp.network.model.WeatherResponse
-import com.stewemetal.kmpweatherapp.repository.WeatherRepositoryImpl
+import com.stewemetal.kmpweatherapp.repository.WeatherRepository
+import org.koin.android.ext.android.get
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,20 +33,17 @@ class MainActivity : ComponentActivity() {
                     var weatherData: WeatherResponse? by remember {
                         mutableStateOf(null)
                     }
-                    val weatherRepository by remember {
-                        mutableStateOf(WeatherRepositoryImpl())
-                    }
+                    val weatherRepository = get<WeatherRepository>()
+
                     LaunchedEffect(weatherData) {
-                        if(weatherData == null) {
+                        if (weatherData == null) {
                             weatherData = weatherRepository.getWeather()
                         }
                     }
 
                     Column {
-                        GreetingView(Greeting().greet())
-
                         val weather = weatherData
-                        if(weather != null) {
+                        if (weather != null) {
 //                        Text(text = weather.data[0].weather[0].description)
                             Text(text = weather.sys.country)
                         }
@@ -53,18 +51,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun GreetingView(text: String) {
-    Text(text = text)
-}
-
-@Preview
-@Composable
-fun DefaultPreview() {
-    MyApplicationTheme {
-        GreetingView("Hello, Android!")
     }
 }

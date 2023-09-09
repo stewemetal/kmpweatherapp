@@ -1,12 +1,14 @@
 package com.stewemetal.kmpweatherapp.repository
 
 import com.stewemetal.kmpweatherapp.network.OpenWeatherApi
+import org.koin.core.annotation.Singleton
 
-class WeatherRepositoryImpl {
-    private val weatherApi: OpenWeatherApi = OpenWeatherApi()
-
+@Singleton
+internal class WeatherRepositoryImpl(
+    private val weatherApi: OpenWeatherApi,
+) : WeatherRepository {
     @Throws(Exception::class)
-    suspend fun getWeather() =
+    override suspend fun getWeather() =
         weatherApi.getWeatherData(
             lat = 47.4523736,
             lon = 19.0381818,

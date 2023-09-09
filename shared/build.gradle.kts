@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.native.coroutines)
 }
 
@@ -49,9 +50,9 @@ kotlin {
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
+//            isStatic = true
         }
     }
-
 
     sourceSets {
         val commonMain by getting {
@@ -61,6 +62,8 @@ kotlin {
                 implementation(libs.koin.core)
                 implementation(libs.koin.annotations)
             }
+
+            kotlin.srcDirs("build/generated/ksp/metadata/commonMain/kotlin")
         }
 
         val commonTest by getting {

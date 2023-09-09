@@ -10,6 +10,7 @@ androidx-test-ext = "1.1.5"
 androidx-test-runner = "1.5.1"
 coroutines = "1.7.3"
 detekt = "1.23.0"
+foundation = "1.5.1"
 io-coil = "2.2.2"
 java = "17"
 junit = "4.13.2"
@@ -19,7 +20,9 @@ koin-annotations = "1.2.2"
 koin-compose = "3.4.6"
 kotlin = "1.9.10"
 ktor = "2.3.4"
+material = "1.5.1"
 nav-compose = "2.7.2"
+ui = "1.5.0"
 viewModel-ktx = "2.6.6"
 viewModel-compose = "2.6.3"
 lifecycle-runtime-compose = "2.6.2"
@@ -34,15 +37,20 @@ crashlytics-plugin = "2.9.9"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
+androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
 androidx-lifecycle-viewModel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "viewModel-ktx" }
 androidx-lifecycle-viewModel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewModel-compose" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle-runtime-compose" }
+androidx-material = { module = "androidx.compose.material:material", version.ref = "material" }
 androidx-navigation-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "nav-compose" }
 androidx-test-core = { module = "androidx.test:core-ktx", version.ref = "androidx-test" }
 androidx-test-core-ktx = { module = "androidx.test:core-ktx", version.ref = "androidx-core-ktx" }
 androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-ext" }
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
+androidx-ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
+androidx-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "ui" }
+androidx-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "ui" }
 io-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "io-coil" }
 io-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 io-ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
