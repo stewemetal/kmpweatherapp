@@ -1,7 +1,9 @@
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    kotlin("plugin.serialization") version "1.9.0"
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.native.coroutines)
 }
 
 @OptIn(org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi::class)
@@ -16,13 +18,14 @@ kotlin {
         }
     }
 
-    val iosX64 = iosX64()
-    val iosArm64 = iosArm64()
-    val iosSimulatorArm64 = iosSimulatorArm64()
+    jvm("desktop") {
+        jvmToolchain(17)
+    }
+
     listOf(
-        iosX64,
-        iosArm64,
-        iosSimulatorArm64,
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
     ).forEach {
         it.binaries.framework {
             baseName = "shared"
@@ -30,15 +33,11 @@ kotlin {
     }
 
     sourceSets {
-        val ktorVersion = "2.3.4"
-        val coroutinesVersion = "1.7.2"
-
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+                implementation(libs.kotlinx.coroutines.core)
+                implementation(libs.bundles.ktor.shared)
+                implementation(libs.koin.core)
             }
         }
 
@@ -50,17 +49,21 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
+                implementation(libs.io.ktor.client.android)
+                implementation(libs.koin.android)
             }
         }
 
+        val iosX64Main by getting
+        val iosArm64Main by getting
+        val iosSimulatorArm64Main by getting
         val iosMain by getting {
             dependsOn(commonMain)
-//            iosX64.dependsOn(this)
-//            iosArm64.dependsOn(this)
-//            iosSimulatorArm64.dependsOn(this)
+            iosX64Main.dependsOn(this)
+            iosArm64Main.dependsOn(this)
+            iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
+                implementation(libs.io.ktor.client.darwin)
             }
         }
     }
