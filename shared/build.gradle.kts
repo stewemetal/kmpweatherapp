@@ -76,6 +76,7 @@ kotlin {
             dependencies {
                 implementation(libs.io.ktor.client.android)
                 implementation(libs.koin.android)
+                implementation(libs.play.services.location)
             }
         }
 

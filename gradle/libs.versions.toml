@@ -34,6 +34,7 @@ ksp = "1.9.10-1.0.13"
 multiplatform-settings = "1.0.0"
 crashlytics = "18.4.3"
 crashlytics-plugin = "2.9.9"
+playServicesLocation = "21.0.1"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -81,6 +82,7 @@ sqldelight-primitive-adapter = { module = "app.cash.sqldelight:primitive-adapter
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-date-time" }
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
 firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx", version.ref = "crashlytics" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [bundles]
 androidx-test = [
