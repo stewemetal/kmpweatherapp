@@ -19,6 +19,6 @@ class OpenWeatherApi(
         apiKey: String = "97c1aa04a1d56123dcb7ca6b51732c85",
     ): WeatherResponse =
         httpClient
-            .get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&appid=$apiKey")
+            .get("https://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=metric&appid=$apiKey")
             .body()
 }

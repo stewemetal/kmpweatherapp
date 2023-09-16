@@ -41,15 +41,17 @@ android {
 
 dependencies {
     implementation(project(":shared"))
+    implementation(libs.bundles.compose)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.activity.compose)
-    implementation(libs.koin.core)
-    implementation(libs.koin.android)
+
+    implementation(libs.bundles.compose)
+
+    implementation(libs.bundles.koin)
     implementation(libs.koin.annotations)
     ksp(libs.koin.ksp.compiler)
-    implementation(libs.koin.compose)
 }
