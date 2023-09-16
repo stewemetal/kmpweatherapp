@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment.Companion.Center
@@ -33,12 +34,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.stewemetal.kmpweatherapp.android.ui.home.HomeViewEvent.LoadWeather
 import org.koin.androidx.compose.koinViewModel
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = koinViewModel(),
 ) {
+    val locationPermissionState = rememberPermissionState(
+        android.Manifest.permission.ACCESS_FINE_LOCATION,
+    )
+
     val state by viewModel.state.collectAsState()
 
     if (state.isLoading) {
@@ -47,6 +57,14 @@ fun HomeScreen(
             contentAlignment = Center,
         ) {
             CircularProgressIndicator()
+        }
+
+        if (!locationPermissionState.status.isGranted) {
+            SideEffect {
+                locationPermissionState.launchPermissionRequest()
+            }
+        } else {
+            viewModel.triggerViewEvent(LoadWeather)
         }
     } else {
         HomeScreenContent(state)

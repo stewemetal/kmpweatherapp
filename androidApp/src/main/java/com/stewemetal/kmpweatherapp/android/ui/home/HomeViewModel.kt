@@ -2,6 +2,7 @@ package com.stewemetal.kmpweatherapp.android.ui.home
 
 import androidx.lifecycle.viewModelScope
 import com.stewemetal.kmpweatherapp.android.architecture.BaseViewModel
+import com.stewemetal.kmpweatherapp.android.ui.home.HomeViewEvent.LoadWeather
 import com.stewemetal.kmpweatherapp.android.usecase.GetWeatherUseCase
 import com.stewemetal.kmpweatherapp.network.model.WeatherResponse
 import kotlinx.coroutines.launch
@@ -15,15 +16,18 @@ class HomeViewModel(
 ) : BaseViewModel<HomeViewEvent, HomeState>(
     initialState = HomeState(),
 ) {
-
-    init {
-        viewModelScope.launch {
-            val weatherResult = getWeatherUseCase.getWeather()
-            emitNewState {
-                copy(
-                    isLoading = false,
-                    weather = weatherResult.toPresentation()
-                )
+    override fun onViewEvent(event: HomeViewEvent) {
+        when (event) {
+            LoadWeather -> {
+                viewModelScope.launch {
+                    val weatherResult = getWeatherUseCase.getWeather()
+                    emitNewState {
+                        copy(
+                            isLoading = false,
+                            weather = weatherResult.toPresentation(),
+                        )
+                    }
+                }
             }
         }
     }
@@ -61,7 +65,4 @@ class HomeViewModel(
                 }
             }
         )
-
-    override fun onViewEvent(event: HomeViewEvent) {
-    }
 }

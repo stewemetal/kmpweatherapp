@@ -49,6 +49,10 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.activity.compose)
 
+    implementation(libs.accompanist.permissions)
+
+    implementation(libs.play.services.location)
+
     implementation(libs.bundles.compose)
 
     implementation(libs.bundles.koin)
